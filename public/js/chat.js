@@ -1,6 +1,6 @@
 var socket = io.connect('/',{
     forceNew: true,
-    transports: ["polling"],
+    transports: ["websocket"],
  });
 
 //Elements
