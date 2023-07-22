@@ -1,4 +1,4 @@
-var socket = io.connect({
+var socket = io.connect('https://chat-app-black-six.vercel.app',{
     forceNew: true,
     transports: ["polling"],
  });
