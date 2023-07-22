@@ -1,7 +1,4 @@
-var socket = io.connect('/',{
-    forceNew: true,
-    transports: ["websocket"]
- });
+var socket = io();
 
 //Elements
 const $messForm = document.querySelector('#message-form')

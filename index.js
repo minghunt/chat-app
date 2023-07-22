@@ -1,5 +1,5 @@
 import express from 'express'
-import https from 'https'
+import http from 'http'
 import { Server } from 'socket.io';
 import Filter from 'bad-words'
 import * as messages from './src/untils/messages.js'
@@ -9,7 +9,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express()
-const server = https.createServer(app)
+const server = http.createServer(app)
 const io = new Server(server)
 
 
@@ -38,6 +38,7 @@ io.on('connection', (socket) => {
             room: user.room,
             users: users.getUsersInRoom(user.room)
         })
+
         callback()
     })
 
