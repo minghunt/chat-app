@@ -1,4 +1,7 @@
-var socket = io()
+var socket = io.connect("http://localhost:3000", {
+    forceNew: true,
+    transports: ["polling"],
+ });
 
 //Elements
 const $messForm = document.querySelector('#message-form')
