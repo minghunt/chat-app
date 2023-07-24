@@ -31,8 +31,8 @@ io.on('connection', (socket) => {
 
         socket.join(user.room)
 
-        socket.emit('message', messages.generateMessage('Admin', 'Welcome!'))
-        socket.broadcast.to(user.room).emit('message', messages.generateMessage(user.username + ' has joined!'))
+        socket.emit('message', messages.generateMessage('Admin', 'Welcome!',user.avatarUrl))
+        socket.broadcast.to(user.room).emit('message', messages.generateMessage('Admin',user.username + ' has joined!',user.avatarUrl))
 
         io.to(user.room).emit('roomData', {
             room: user.room,
@@ -47,22 +47,22 @@ io.on('connection', (socket) => {
         const filter = new Filter();
         if (filter.isProfane(messValue))
             return callback('Profantity is not allowed!')
-        io.to(user.room).emit('message', messages.generateMessage(user.username, messValue))
+        io.to(user.room).emit('message', messages.generateMessage(user.username, messValue,user.avatarUrl))
         callback()
     })
 
     socket.on("sendLocation", (location, callback) => {
         const user = users.getUser(socket.id)
 
-        io.to(user.room).emit('locationMessage', messages.generateLocationMessage(user.username, 'https://www.google.com/maps?q=' + location.latitude + ',' + location.longtitude))
+        io.to(user.room).emit('locationMessage', messages.generateLocationMessage(user.username, 'https://www.google.com/maps?q=' + location.latitude + ',' + location.longtitude,user.avatarUrl))
         callback()
     })
     socket.on('disconnect', () => {
         const user = users.removeUser(socket.id)
         if (user) {
-            io.to(user.room).emit('message', messages.generateMessage('Admin', user.username + ' has left!'))
+            io.to(user.room).emit('message', messages.generateMessage('Admin', user.username + ' has left!',user.avatarUrl))
             io.to(user.room).emit('roomData', {
-                room: user.room,
+                room: user.room, 
                 users: users.getUsersInRoom(user.room)
             })
         }

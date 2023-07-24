@@ -11,6 +11,9 @@ const $messages = document.querySelector('#messages')
 const messageTemplate = document.querySelector('#message-template').innerHTML
 const locationTemplate = document.querySelector('#location-template').innerHTML
 const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
+const userListTemplate = document.getElementsByClassName('users').innerHTML
+
+
 
 //Options
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
@@ -23,6 +26,7 @@ socket.on('message', (mess) => {
     console.log(mess)
     const html = Mustache.render(messageTemplate, {
         username: mess.username,
+        avatarUrl:mess.avatarUrl,
         mess: mess.text,
         createdAt: moment(mess.createdAt).format("h:mm a")
     })
@@ -34,6 +38,7 @@ socket.on('locationMessage', (locationMess) => {
     console.log(locationMess)
     const html = Mustache.render(locationTemplate, {
         username: locationMess.username,
+        avatarUrl:locationMess.avatarUrl,
         url: locationMess.url,
         createdAt: moment(locationMess.createdAt).format("h:mm a")
     })
@@ -65,7 +70,6 @@ $sendLocationButton.addEventListener('click', (e) => {
     $sendLocationButton.setAttribute('disabled', 'disabled')
 
     navigator.geolocation.getCurrentPosition((position) => {
-        console.log(position)
 
         let location = {
             latitude: position.coords.latitude,
@@ -75,8 +79,8 @@ $sendLocationButton.addEventListener('click', (e) => {
             $sendLocationButton.removeAttribute('disabled')
             console.log('Location shared!')
         })
-    })
-
+    })  
+ 
 })
 
 socket.emit('join', { username, room }, (error) => {
@@ -87,9 +91,11 @@ socket.emit('join', { username, room }, (error) => {
 })
 
 socket.on('roomData', ({ room, users }) => {
+    console.log('ssss',users)
     const html = Mustache.render(sidebarTemplate, {
         room,
-        users,
+        users
+
     })
     document.querySelector('#sidebar').innerHTML = html
 })

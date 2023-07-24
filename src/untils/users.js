@@ -1,5 +1,4 @@
 const users = []
-
 const addUser = ({ id, username, room }) => {
     username = username.trim().toLowerCase()
     room = room.trim().toLowerCase()
@@ -9,7 +8,7 @@ const addUser = ({ id, username, room }) => {
             error: 'Username and room are required!'
         }
     }
-
+    let avatarUrl = 'https://api.dicebear.com/6.x/avataaars/svg?seed='+username
     const existingUser = users.find((user) => {
         return user.room === room && user.username === username
     })
@@ -18,7 +17,7 @@ const addUser = ({ id, username, room }) => {
             error: 'User name is in use!'
         }
 
-    const user = { id, username, room }
+    const user = { id, username, room,avatarUrl }
 
     users.push(user)
     return { user }
@@ -40,5 +39,5 @@ const getUser = (id) => {
 const getUsersInRoom = (room) => {
     return users.filter((user) => user.room === room.toLowerCase())
 }
-
-export { addUser, removeUser, getUser, getUsersInRoom }
+ 
+export { addUser, removeUser, getUser, getUsersInRoom } 

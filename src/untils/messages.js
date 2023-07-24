@@ -1,13 +1,17 @@
-const generateMessage=(username, text)=>{
+const generateMessage=(username, text, avatarUrl)=>{
+    if (username==='Admin')
+        avatarUrl='/img/admin.jpg'
     return {
         username,
+        avatarUrl,
         text,
         createdAt: new Date().getTime()
     }
 }
-const generateLocationMessage=(username,url)=>{
+const generateLocationMessage=(username,url,avatarUrl)=>{
     return {
         username,
+        avatarUrl,
         url,
         createdAt: new Date().getTime()
     }
