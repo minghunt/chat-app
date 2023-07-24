@@ -1,6 +1,6 @@
 const generateMessage=(username, text, avatarUrl)=>{
     if (username==='Admin')
-        avatarUrl='/img/admin.jpg'
+        avatarUrl='/img/Admin.jpg'
     return {
         username,
         avatarUrl,
